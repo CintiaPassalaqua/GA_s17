@@ -4,21 +4,23 @@ import * as S from './styled'
 
 function App(props) {
   const [ procura, setProcura ] = useState('ditto')
-  const [ pokemon, setPokemon ] = useState({name:'', price:0})
   const [ pokemonCards, setPokemonCards ] = useState([])
   const [ erro, setErro] = useState(false)
-  const dTipos = {'bug':'inseto', 'dark':'noturno', 'dragon':'dragão', 'electric':'elétrico', 
+				
+  function handlePesquisa() { 
+	
+  }
+
+  useEffect(() => {
+	    const dTipos = {'bug':'inseto', 'dark':'noturno', 'dragon':'dragão', 'electric':'elétrico', 
 				'fairy':'fada', 'fighting':'lutador', 'fire':'fogo',
 				'grass':'grama', 'water':'água', 'normal':'normal',
 				'poison':'venenoso', 'ground':'terra', 'psychic':'psíquico',
 				'rock':'pedra', 'flying':'voador', 'ghost':'fantasma', 'steel':'metálico'};
-  const iniciais = ['pikachu', 'bulbasaur', 'charmander', 'squirtle', 
-				Math.floor((Math.random() * 500) + 1), Math.floor((Math.random() * 500) + 1), Math.floor((Math.random() * 500) + 1), Math.floor((Math.random() * 500) + 1), Math.floor((Math.random() * 500) + 1)];
-				
-  function handlePesquisa() { 
-	fazPesquisa(procura.toLowerCase());
-  }
-  function fazPesquisa(pesquisa, poeNaLista = false) { 
+  const iniciais = ['pikachu', 'bulbasaur', 'charmander', 'squirtle'];
+
+  const pokeList = [];
+	    function fazPesquisa(pesquisa, poeNaLista = false) { 
 	axios.get(`https://pokeapi.co/api/v2/pokemon/${pesquisa}`).then(resp => {
 		const pokemon = resp.data;
 		pokemon.sprite = resp.data.sprites.front_default;
@@ -31,19 +33,19 @@ function App(props) {
 		delete pokemon.game_indices;
 		delete pokemon.species;
 		delete pokemon.sprites;
-		setPokemon(pokemon);
 		setErro(false);
-		let teste = pokemonCards;
-		teste.push(pokemon);
-		setPokemonCards(teste);
-		if (pokemonCards.length<iniciais.length) { fazPesquisa(iniciais[pokemonCards.length], true); }
+		pokeList.push(pokemon);
+		if (pokeList.length<iniciais.length) { fazPesquisa(iniciais[pokeList.length], true); }
+		if (pokeList.length<40) { fazPesquisa(Math.floor((Math.random() * 500) + 1), true); }
+		else {
+		setPokemonCards(pokeList);			
+		}
 			
 	})
 	.catch(err => {
 		setErro(true);	
 	});
   }
-  useEffect(() => {
 		fazPesquisa(iniciais[0], true);
 	},[]);
   
