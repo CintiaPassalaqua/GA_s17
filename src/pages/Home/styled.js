@@ -1,21 +1,21 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-	height: 100vh;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;	
+	height: 100vh;	
 `;
 
 
 export const Content = styled.div`
-	width: 100vw;
+	width: 100vw
 	display: flex;
-	align-items: center;
-	justify-content: center;
+	display: flex;
+	flex-direction: row;
+   flex-wrap: wrap;
+   flex-flow: row wrap;
+   align-content: flex-start;
+	align-items: flex-start;
+	justify-content: flex-start;	
 `;
-
 
 
 export const Input = styled.input`
@@ -56,7 +56,7 @@ export const ErrorMsg = styled.span`
 export const Card = styled.div`{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: 300px;
-  margin: auto;
+  margin: 2rem;
   padding: 0;
   text-align: center;
   font-family: arial;
