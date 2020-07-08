@@ -3,7 +3,6 @@ import * as S from './styled';
 import { useHistory } from 'react-router-dom'
 
 export default function Loja() {
-  const history = useHistory();
 	const [ pokeList, setPokeList ] = useState([]);
 	useEffect(() => {
 		let pokeData = JSON.parse(localStorage.getItem('pokemon'));
@@ -11,9 +10,13 @@ export default function Loja() {
 			setPokeList(pokeData);
 			localStorage.clear();
 		} else {
-			history.push('/');
+			buscaPokemon();
 		}
 	},[]);
+	const history = useHistory();
+	function buscaPokemon() {
+		history.push('/');
+	}
 	return (
 	<S.Container>	
 	{ pokeList.map((p, i) => {
