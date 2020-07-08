@@ -40,7 +40,7 @@ export const ListItem = styled.li`
 
 
 export const ImagemPerfil = styled.img`
-	width: 25%;
+	width: 100%;
 	background: #EEE;
 	padding: .5rem;
 	border-radius: .5rem;

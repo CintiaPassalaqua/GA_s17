@@ -9,7 +9,7 @@ export default function Pokemon() {
 			setPokemon(pokemonData);
 			console.log(pokemonData);
 			localStorage.clear();
-		}
+		} 
 	},[]);
 	return (
 	<S.Container>

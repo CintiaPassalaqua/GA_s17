@@ -1,19 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import * as S from './styled'
 import { useHistory } from 'react-router-dom'
 
 function App(props) {
   const history = useHistory();
-  const [ usuario, setUsuario ] = useState('ditto')
+  const [ procura, setProcura ] = useState('ditto')
+  const [ pokemon, setPokemon ] = useState({name:'', price:0})
+  const [ pokemonCards, setPokemonCards ] = useState([])
   const [ erro, setErro] = useState(false)
   const dTipos = {'bug':'inseto', 'dark':'noturno', 'dragon':'dragão', 'electric':'elétrico', 
 				'fairy':'fada', 'fighting':'lutador', 'fire':'fogo',
 				'grass':'grama', 'water':'água', 'normal':'normal',
 				'poison':'venenoso', 'ground':'terra', 'psychic':'psíquico',
-				'rock':'pedra', 'flying':'voador', 'ghost':'fantasma', 'steel':'metálico'}
+				'rock':'pedra', 'flying':'voador', 'ghost':'fantasma', 'steel':'metálico'};
+  const iniciais = ['pikachu', 'bulbasaur', 'charmander', 'squirtle', 
+				Math.floor((Math.random() * 500) + 1), Math.floor((Math.random() * 500) + 1), Math.floor((Math.random() * 500) + 1), Math.floor((Math.random() * 500) + 1), Math.floor((Math.random() * 500) + 1)];
+				
   function handlePesquisa() { 
-	axios.get(`https://pokeapi.co/api/v2/pokemon/${usuario}`).then(resp => {
+	fazPesquisa(procura.toLowerCase());
+  }
+  function fazPesquisa(pesquisa, poeNaLista = false) { 
+	axios.get(`https://pokeapi.co/api/v2/pokemon/${pesquisa}`).then(resp => {
 		console.log(resp);
 		const pokemon = resp.data;
 		pokemon.sprite = resp.data.sprites.front_default;
@@ -26,21 +34,37 @@ function App(props) {
 		delete pokemon.game_indices;
 		delete pokemon.species;
 		delete pokemon.sprites;
-		localStorage.setItem('pokemon', JSON.stringify(pokemon));
+		setPokemon(pokemon);
 		setErro(false);
-		history.push('/pokemon');		
+		setPokemonCards(pokemonCards.push(pokemon));
+		console.log(pokemonCards);
+		if (pokemonCards.length<iniciais.length) { 
+			fazPesquisa(iniciais[pokemonCards.length], true); }
+		else {
+		localStorage.setItem('pokemon', JSON.stringify(pokemonCards));		
+		history.push('/loja'); }	
 	})
 	.catch(err => {
 		setErro(true);		
 	});
   }
+  useEffect(() => {
+		fazPesquisa(iniciais[0], true);
+	},[]);
+  
   return (
     <S.Container>
     <S.Content>
-    <S.Input name="usuario" id="usuario" className="usuarioInput" placeholder="Pokemon" value={usuario} onChange={e => setUsuario(e.target.value) } />
+    <S.Input name="usuario" id="usuario" className="usuarioInput" placeholder="Pokemon" value={procura} onChange={e => setProcura(e.target.value) } />
 	<S.Button type="button" onClick={handlePesquisa}>Pesquisar</S.Button>
     </S.Content>
-	{ erro ? <S.ErrorMsg>Pokémon {usuario} não encontrado.</S.ErrorMsg> : '' }
+	{ erro ? <S.ErrorMsg>Pokémon {procura} não encontrado.</S.ErrorMsg> : '' }
+	{ pokemonCards.length }
+	{ iniciais.length }
+	{ iniciais[pokemonCards.length] }
+	{ [1,2,3].map((h, i) => {
+			return (<p>{h}</p>)
+			}) }
 	</S.Container>
   );
 }
