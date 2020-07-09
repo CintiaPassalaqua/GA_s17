@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-	height: 100vh;	
+	height: 100vh;		
+	margin-right: 230px;
 `;
 
 
@@ -14,7 +15,7 @@ export const Content = styled.div`
    flex-flow: row wrap;
    align-content: flex-start;
 	align-items: flex-start;
-	justify-content: flex-start;	
+	justify-content: flex-start;
 `;
 
 
@@ -56,7 +57,7 @@ export const ErrorMsg = styled.span`
 export const Card = styled.div`{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: 300px;
-  margin: 2rem;
+  margin: 1.5rem;
   padding: 0;
   text-align: center;
   font-family: arial;

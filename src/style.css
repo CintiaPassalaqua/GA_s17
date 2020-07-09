@@ -157,7 +157,7 @@ header {
   position: fixed;
   top: 0;
   height: 100%;
-  width: 260px;
+  width: 300px;
   /* header height */
   padding-top: 50px;
   overflow-y: auto;
@@ -165,21 +165,15 @@ header {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   z-index: 3;
 }
-@media only screen and (min-width: 768px) {
-  #main-nav, #cd-cart {
-    width: 350px;
-  }
-}
+
 @media only screen and (min-width: 1200px) {
   #main-nav, #cd-cart {
-    width: 30%;
-    /* header height has changed */
     padding-top: 80px;
   }
 }
 
 #main-nav {
-  left: -100%;
+  right: -100%;
   background: #FFF;
   -webkit-transition: left 0.3s;
   -moz-transition: left 0.3s;
@@ -242,7 +236,7 @@ header {
 }
 
 #cd-cart {
-  right: -100%;
+  right: 0;
   background: #FFF;
   -webkit-transition: right 0.3s;
   -moz-transition: right 0.3s;
@@ -448,20 +442,3 @@ xkeyframes
   }
 }
 
-.fogo button{
-	background-color: red;
-}
-.fogo p{
-	color: red;
-}
-.elétrico {
-	color: yellow;
-}
-
-.água {
-	color: #0075e3;
-}
-
-.psíquico {
-	color: gray;
-}

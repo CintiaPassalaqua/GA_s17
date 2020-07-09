@@ -8,6 +8,8 @@ function App(props) {
   const [ pokemonCards, setPokemonCards ] = useState([]);
   const [ erro, setErro] = useState(false);
   const [ pokeShow, setPokeShow] = useState([]);
+  const [ carrinho, setCarrinho] = useState([]);
+  const [ total, setTotal] = useState(0);
 				
   function handlePesquisa() { 
 	if (procura==='') {
@@ -22,6 +24,18 @@ function App(props) {
 	}
 	setErro(lista.length===0);
 	setPokeShow(lista);
+  }
+  
+    function addToCart(id) { 
+	let cart = carrinho;
+	cart.push(id)
+	setCarrinho(cart);
+	setTotal(total+pokemonCards[id].price);
+  }
+
+    function finalizarCompra() { 
+	setCarrinho([]);
+	setTotal(0);
   }
 
   useEffect(() => {
@@ -71,16 +85,16 @@ function App(props) {
   function renderCard(p_index, i) {
 	let p = pokemonCards[p_index];
 	if (!p.show) { 
-		console.log('oi');
 		return '';
 	}
 	return (<S.Card key={i} ><S.ImagemCard src={p.sprite} />
 	<h2>{ p.name.charAt(0).toUpperCase() + p.name.slice(1) }</h2>
   <S.Price>R${ p.price.toFixed(2).replace('.', ',') }</S.Price>
-  <p><S.AddToCart>Adicionar ao Carrinho</S.AddToCart></p>	
+  <p><S.AddToCart onClick={() => addToCart(p_index)}>Adicionar ao Carrinho</S.AddToCart></p>	
 	</S.Card>)
 			
   }
+
   return (
   <>
   <header>
@@ -90,23 +104,18 @@ function App(props) {
 </main>
 <div id="cd-shadow-layer"></div>
 
-<div id="cd-cart">
-   <h2>Cart</h2>
+<div id="cd-cart" >
+   <h2>Carrinho</h2>
    <ul className="cd-cart-items">
-      <li>fgdfg
-      </li>
-
-      <li>fdgdgf
-      </li>
+   { carrinho.map((p,i) => { return(<li key={i}>{pokemonCards[p].name.charAt(0).toUpperCase() + pokemonCards[p].name.slice(1)}</li>) }) }
    </ul> 
 
    <div className="cd-cart-total">
-      <p>Total <span>$39.96</span></p>
+      <p>Total <span>R${ total.toFixed(2).replace('.', ',') }</span></p>
    </div> 
 
-   <a href="#0" className="checkout-btn">Checkout</a>
+<a href="#0" className="checkout-btn" onClick={finalizarCompra}>Finalizar Compra</a>
 
-   <p className="cd-go-to-cart"><a href="#0">Go to cart page</a></p>
 </div> 
     <S.Container>
 
