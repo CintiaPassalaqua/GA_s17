@@ -159,8 +159,6 @@ export const AddToCart = styled.button`{
 	}
 `;
 
-
-
 export const ImagemCard = styled.img`
 	width: 100%;
 	background: #EEE;

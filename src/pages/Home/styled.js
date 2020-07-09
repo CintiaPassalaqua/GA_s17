@@ -87,7 +87,7 @@ export const AddToCart = styled.button`{
 
 export const ImagemCard = styled.img`
 	width: 100%;
-	background: #EEE;
+	background: #FFF;
 	border-radius: 1rem 1rem 0 5rem;
 `;
 
